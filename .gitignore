@@ -1,51 +1,19 @@
-# OS / editor files
-.DS_Store
-Thumbs.db
-*.swp
-*.swo
-*~
+.vscode
 
-# IDE files
-.idea/
-*.iml
-*.ipr
-*.iws
-.vscode/
+# Python and Kivy
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
 
-# Local Android config
-local.properties
-*.keystore
-*.jks
-
-# Gradle / build output
-.gradle/
-**/build/
-**/captures/
-**/out/
-**/generated/
-**/intermediates/
-**/obj/
-**/apk/
-**/aab/
-**/lint-results*/
-**/reports/
-**/cxx/
-.externalNativeBuild/
-
-# Kotlin / Java generated files
-*.class
-*.log
-
-# Testing / coverage
-coverage/
-*.ec
-*.hprof
-
-# Misc
+# Buildozer outputs
+buildozer/.buildozer/
+buildozer/bin/
 *.apk
-*.aar
-*.ap_
-*.dex
+*.aab
 
-# Android Studio metadata
-*.orig
+# Android/Gradle build outputs
+android-app/.gradle/
+android-app/**/build/
+android-app/local.properties
