@@ -11,3 +11,5 @@ int main(){
   cout<<kucing<<" Bunyinya Miaww"<<endl;
 }
 ```
+
+$$ \frac{\int^{\infin}_{-\infin}{\left( \sum_{i=0}^{1024} x^3+x \right)x^3 \text{ dx}} }{\sum_{i=0}^{1000}i^3+7}$$
