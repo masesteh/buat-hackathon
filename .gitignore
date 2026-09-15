@@ -8,6 +8,8 @@ venv/
 env/
 
 # Buildozer outputs
+/.buildozer/
+/bin/
 buildozer/.buildozer/
 buildozer/bin/
 *.apk
