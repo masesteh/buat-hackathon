@@ -5,7 +5,7 @@ HI THERE !!!
 - I have a lot of ideas but, where i can start it? and how....
 - Versus learn
 - Coding app
-- 
+- When you loose 
 
 "As long im breathing, I got a reason to pray," ~Praise \
 "Live and let live" \
