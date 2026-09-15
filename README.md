@@ -12,4 +12,4 @@ int main(){
 }
 ```
 
-$$ \frac{\int^{\inf}_{-\inf}{\left( \sum_{i=0}^{1024} x^3+x \right)x^3 \text{ dx}} }{\sum_{i=0}^{1000}i^3+7} $$
+$ \frac{\int^{\inf}_{-\inf}{\left( \sum_{i=0}^{1024} x^3+x \right)x^3 \text{ dx}} }{\sum_{i=0}^{1000}i^3+7} $
