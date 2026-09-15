@@ -1,21 +1,36 @@
-.vscode
+# Gradle
+.gradle/
+build/
+*/build/
+!gradle/wrapper/gradle-wrapper.jar
 
-# Python and Kivy
-__pycache__/
-*.py[cod]
-.venv/
-venv/
-env/
+# Android Studio / IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+local.properties
 
-# Buildozer outputs
-/.buildozer/
-/bin/
-buildozer/.buildozer/
-buildozer/bin/
+# Android build outputs
 *.apk
 *.aab
+*.ap_
+*.dex
+captures/
+externalNativeBuild/
+cmake-build-*/
 
-# Android/Gradle build outputs
-android-app/.gradle/
-android-app/**/build/
-android-app/local.properties
+# Signing material
+*.jks
+*.keystore
+*.p12
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
