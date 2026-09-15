@@ -1,20 +1,6 @@
-HI THERE
-```c++
-#include <bits/stdc++.h>
-using namespace std;
-
-#define kucing "SAPI"
-#define sapi "KUCING"
-
-int main(){
-  cout<<sapi<<" Bunyinya Mooo"<<endl;
-  cout<<kucing<<" Bunyinya Miaww"<<endl;
-}
-```
-
-$$ \frac{\int^{\inf}_{-\inf}{\left( \sum_{i=0}^{1024} x^3+x \right)x^3 \text{ dx}} }{\sum_{i=0}^{1000}i^3+7} $$
-
-$$ \tau $$
-
-- As long im breathing
-- I got a reason to pray
+HI THERE !!!
+- Opsie reels so attractive
+- Opsie how to start a new thing?
+- I have a lot of ideas but, where i can start it? and how....
+ 
+"As long im breathing, I got a reason to pray," ~Praise
