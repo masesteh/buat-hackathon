@@ -1,0 +1,51 @@
+# OS / editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE files
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# Local Android config
+local.properties
+*.keystore
+*.jks
+
+# Gradle / build output
+.gradle/
+**/build/
+**/captures/
+**/out/
+**/generated/
+**/intermediates/
+**/obj/
+**/apk/
+**/aab/
+**/lint-results*/
+**/reports/
+**/cxx/
+.externalNativeBuild/
+
+# Kotlin / Java generated files
+*.class
+*.log
+
+# Testing / coverage
+coverage/
+*.ec
+*.hprof
+
+# Misc
+*.apk
+*.aar
+*.ap_
+*.dex
+
+# Android Studio metadata
+*.orig
