@@ -1,1 +1,19 @@
 .vscode
+
+# Python and Kivy
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Buildozer outputs
+buildozer/.buildozer/
+buildozer/bin/
+*.apk
+*.aab
+
+# Android/Gradle build outputs
+android-app/.gradle/
+android-app/**/build/
+android-app/local.properties
