@@ -4,6 +4,6 @@ HI THERE !!!
 - Opsie how to start a new thing?
 - I have a lot of ideas but, where i can start it? and how....
 
-"As long im breathing, I got a reason to pray," ~Praise
-"Live and let live"
-"Long road a head"
+"As long im breathing, I got a reason to pray," ~Praise \\
+"Live and let live" \\
+"Long road a head" \\
