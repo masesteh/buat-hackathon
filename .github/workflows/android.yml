@@ -25,14 +25,14 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v4
-
-      - name: Accept Android SDK licenses
-        run: |
-          sdkmanager --licenses < /dev/null || true
+        with:
+          packages: ''
 
       - name: Install Android SDK packages
         run: |
-          sdkmanager "platforms;android-34" "build-tools;34.0.0"
+          sdkmanager --install \
+            "platforms;android-34" \
+            "build-tools;34.0.0"
 
       - name: Build debug APK
         run: ./gradlew --no-daemon --stacktrace assembleDebug
