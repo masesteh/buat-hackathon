@@ -1,13 +1,5 @@
 # 1
 
-- [ ] timer
-  - [ ] study time
-  - [ ] short break time
-  - [ ] long break time
-  - [ ] long break interval
-  - misalkan settingannya begini: study 25 mnt, short break 5 mnt, long break 15 mnt, long break interval 3:
-    - 1 sesi terdiri dari fokus/belajar 25 mnt, istirahat 5 mnt
-    - tapi setiap sesi nomor kelipatan 3, istirahatnya jadi 15 menit
 - [ ] kalender
 - [ ] virtual pet
 - [ ] study cam
