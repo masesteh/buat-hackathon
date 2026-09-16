@@ -1,4 +1,4 @@
-- [] timer
+- [ ] timer
   - [ ] study time
   - [ ] short break time
   - [ ] long break time
