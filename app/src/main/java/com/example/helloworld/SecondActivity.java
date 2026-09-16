@@ -1,15 +1,11 @@
-// MainActivity.java
-
 package com.example.helloworld;
 
 import android.app.*;
 import android.os.*;
-import android.content.*;
-import android.graphics.*;
 import android.view.*;
 import android.widget.*;
 
-public final class MainActivity extends Activity {
+public final class SecondActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,20 +17,19 @@ public final class MainActivity extends Activity {
         layout.setPadding(40, 40, 40, 40);
 
         TextView title = new TextView(this);
-        title.setText("main page");
+        title.setText("second page");
         title.setTextSize(32);
         title.setGravity(Gravity.CENTER);
 
-        Button button = new Button(this);
-        button.setText("go to second page");
+        Button backButton = new Button(this);
+        backButton.setText("go back");
 
-        button.setOnClickListener(v -> {
-            Intent intent = new Intent(this, SecondActivity.class);
-            startActivity(intent);
+        backButton.setOnClickListener(v -> {
+            finish();
         });
 
         layout.addView(title);
-        layout.addView(button);
+        layout.addView(backButton);
 
         setContentView(layout);
     }
