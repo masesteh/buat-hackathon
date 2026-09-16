@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.helloworld'
+    namespace 'io.ugm'
     compileSdk 35
 
     defaultConfig {
-        applicationId 'com.example.helloworld'
+        applicationId 'io.ugm'
         minSdk 24
         targetSdk 35
         versionCode 1
@@ -24,5 +24,25 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    sourceSets {
+        getByName("main") {
+            java.srcDirs("src/ugm")
+        }
+    }
+}
+
+tasks.register("copyDebugApk", Copy) {
+    from(layout.buildDirectory.dir("outputs/apk/debug"))
+    into(rootProject.layout.buildDirectory)
+    include("*.apk")
+
+    rename { "app-debug.apk" }
+}
+
+afterEvaluate {
+    tasks.named("assembleDebug").configure {
+        finalizedBy("copyDebugApk")
     }
 }

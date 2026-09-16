@@ -1,4 +1,4 @@
-package com.example.helloworld;
+package io.ugm;
 
 import android.app.*;
 import android.os.*;
