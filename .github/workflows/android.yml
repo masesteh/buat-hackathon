@@ -2,12 +2,17 @@ name: Android build
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - '**'
   pull_request:
   workflow_dispatch:
 
 permissions:
   contents: read
+
+concurrency:
+  group: android-build-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
