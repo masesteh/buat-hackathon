@@ -68,6 +68,8 @@ public final class CalendarActivity extends Activity {
         button.setMinHeight(dp(46));
         button.setPadding(dp(10), 0, dp(10), 0);
         button.setBackground(roundedBackground(color, 12));
+        button.setElevation(0f);
+        button.setStateListAnimator(null);
         if (width > 0) {
             button.setMinWidth(dp(width));
         }
@@ -485,6 +487,8 @@ public final class CalendarActivity extends Activity {
                 );
 
                 Button cell = new Button(this);
+                cell.setElevation(0f);
+                cell.setStateListAnimator(null);
 
                 cell.setLayoutParams(
                         createCellLayoutParams(i)
@@ -555,6 +559,8 @@ public final class CalendarActivity extends Activity {
                     index - firstDayIndex + 1;
 
             Button cell = new Button(this);
+            cell.setElevation(0f);
+            cell.setStateListAnimator(null);
 
             cell.setLayoutParams(
                     createCellLayoutParams(index)
