@@ -4,7 +4,12 @@
         android:theme="@android:style/Theme.Material.Light"
         android:label="Hello World">
 
-        <activity android:name=".SecondActivity" />
+        <receiver
+            android:name=".ReminderReceiver"
+            android:exported="false" />
+
+        <activity android:name=".CalendarActivity" />
+        <activity android:name=".TimerActivity" />
 
         <activity
             android:name=".MainActivity"

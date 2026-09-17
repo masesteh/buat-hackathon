@@ -21,20 +21,31 @@ public final class MainActivity extends Activity {
         layout.setPadding(40, 40, 40, 40);
 
         TextView title = new TextView(this);
-        title.setText("main page");
-        title.setTextSize(32);
+        title.setText("ugm");
+        title.setTextSize(40);
         title.setGravity(Gravity.CENTER);
 
         Button button = new Button(this);
-        button.setText("go to second page");
+        button.setText("Open Pomodoro timer");
 
         button.setOnClickListener(v -> {
-            Intent intent = new Intent(this, SecondActivity.class);
+            Intent intent = new Intent(this, TimerActivity.class);
             startActivity(intent);
         });
 
         layout.addView(title);
         layout.addView(button);
+
+        Button openCalendarButton = new Button(this);
+        openCalendarButton.setText("Open calendar");
+        openCalendarButton.setTextSize(20);
+        openCalendarButton.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, CalendarActivity.class)));
+
+        layout.addView(openCalendarButton,
+                new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT));
 
         setContentView(layout);
     }
