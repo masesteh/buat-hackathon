@@ -6,6 +6,7 @@ import android.graphics.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
+import android.graphics.drawable.*;
 
 public final class MainActivity extends Activity {
 
