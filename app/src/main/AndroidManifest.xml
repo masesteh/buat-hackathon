@@ -2,7 +2,7 @@
 
     <application
         android:theme="@android:style/Theme.Material.Light"
-        android:label="Hello World">
+        android:label="ugm">
 
         <receiver
             android:name=".ReminderReceiver"
