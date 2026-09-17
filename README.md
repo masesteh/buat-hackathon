@@ -1,5 +1,5 @@
-# 1
+# 2
 
-- [ ] kalender
+- [X] kalender
 - [ ] virtual pet
 - [ ] study cam
