@@ -2,6 +2,8 @@ package io.ugm;
 
 import android.app.*;
 import android.content.*;
+import android.graphics.*;
+import android.graphics.drawable.*;
 import android.os.*;
 import android.text.*;
 import android.view.*;
@@ -38,44 +40,95 @@ public final class TimerActivity extends Activity {
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setGravity(Gravity.CENTER_HORIZONTAL);
-        layout.setPadding(40, 48, 40, 40);
+        layout.setPadding(dp(24), dp(28), dp(24), dp(24));
+        layout.setBackgroundColor(Palette.PAPER);
+
+        TextView eyebrow = new TextView(this);
+        eyebrow.setText("FOCUS SESSION");
+        eyebrow.setTextColor(Palette.ACCENT);
+        eyebrow.setTextSize(12);
+        eyebrow.setTypeface(Typeface.DEFAULT_BOLD);
+        eyebrow.setLetterSpacing(0.12f);
+        layout.addView(eyebrow, marginParams(0, 0, 0, 14));
+
+        LinearLayout timerCard = new LinearLayout(this);
+        timerCard.setOrientation(LinearLayout.VERTICAL);
+        timerCard.setGravity(Gravity.CENTER_HORIZONTAL);
+        timerCard.setPadding(dp(20), dp(24), dp(20), dp(24));
+        timerCard.setBackground(roundedBackground(Color.argb(30, 0, 121, 112), 20));
 
         phaseLabel = new TextView(this);
-        phaseLabel.setTextSize(24);
+        phaseLabel.setTextSize(18);
+        phaseLabel.setTextColor(Palette.ACCENT);
+        phaseLabel.setTypeface(Typeface.DEFAULT_BOLD);
         phaseLabel.setGravity(Gravity.CENTER);
 
         timerLabel = new TextView(this);
         timerLabel.setTextSize(56);
+        timerLabel.setTextColor(Palette.INK);
+        timerLabel.setTypeface(Typeface.DEFAULT_BOLD);
         timerLabel.setGravity(Gravity.CENTER);
 
         sessionLabel = new TextView(this);
-        sessionLabel.setTextSize(18);
+        sessionLabel.setTextSize(15);
+        sessionLabel.setTextColor(Palette.MUTED);
         sessionLabel.setGravity(Gravity.CENTER);
 
         startButton = new Button(this);
+        styleButton(startButton, Palette.ACCENT);
         startButton.setOnClickListener(v -> toggleTimer());
 
         Button settingsButton = new Button(this);
         settingsButton.setText("Settings");
+        styleButton(settingsButton, Palette.INK);
         settingsButton.setOnClickListener(v -> showSettingsDialog());
 
         Button resetButton = new Button(this);
         resetButton.setText("Reset session");
+        styleButton(resetButton, Palette.MUTED);
         resetButton.setOnClickListener(v -> resetTimer());
 
         Button backButton = new Button(this);
         backButton.setText("Back");
+        styleButton(backButton, Palette.INK);
         backButton.setOnClickListener(v -> finish());
 
-        layout.addView(phaseLabel, matchParentWrapContent());
-        layout.addView(timerLabel, matchParentWrapContent());
-        layout.addView(sessionLabel, matchParentWrapContent());
-        layout.addView(startButton, matchParentWrapContent());
-        layout.addView(settingsButton, matchParentWrapContent());
-        layout.addView(resetButton, matchParentWrapContent());
+        timerCard.addView(phaseLabel, marginParams(0, 0, 0, 8));
+        timerCard.addView(timerLabel, marginParams(0, 0, 0, 4));
+        timerCard.addView(sessionLabel, matchParentWrapContent());
+        layout.addView(timerCard, marginParams(0, 0, 0, 18));
+        layout.addView(startButton, marginParams(0, 0, 0, 8));
+        layout.addView(settingsButton, marginParams(0, 0, 0, 8));
+        layout.addView(resetButton, marginParams(0, 0, 0, 8));
         layout.addView(backButton, matchParentWrapContent());
         setContentView(layout);
         updateLabels();
+    }
+
+    private int dp(float value) {
+        return (int) (value * getResources().getDisplayMetrics().density + 0.5f);
+    }
+
+    private GradientDrawable roundedBackground(int color, float radius) {
+        GradientDrawable background = new GradientDrawable();
+        background.setColor(color);
+        background.setCornerRadius(dp(radius));
+        return background;
+    }
+
+    private void styleButton(Button button, int color) {
+        button.setTextSize(15);
+        button.setTextColor(Color.WHITE);
+        button.setAllCaps(false);
+        button.setMinHeight(dp(50));
+        button.setPadding(dp(16), 0, dp(16), 0);
+        button.setBackground(roundedBackground(color, 14));
+    }
+
+    private LinearLayout.LayoutParams marginParams(int left, int top, int right, int bottom) {
+        LinearLayout.LayoutParams params = matchParentWrapContent();
+        params.setMargins(dp(left), dp(top), dp(right), dp(bottom));
+        return params;
     }
 
     private LinearLayout.LayoutParams matchParentWrapContent() {
@@ -169,7 +222,7 @@ public final class TimerActivity extends Activity {
     private void showSettingsDialog() {
         LinearLayout form = new LinearLayout(this);
         form.setOrientation(LinearLayout.VERTICAL);
-        form.setPadding(48, 0, 48, 0);
+        form.setPadding(dp(24), 0, dp(24), 0);
 
         EditText study = minutesField("Study time (minutes)", "study", DEFAULT_STUDY);
         EditText shortBreak = minutesField("Break time (minutes)", "break", DEFAULT_BREAK);

@@ -10,12 +10,6 @@ import android.graphics.drawable.*;
 
 public final class MainActivity extends Activity {
 
-    private static final int INK = Color.rgb(27, 38, 49);
-    private static final int MUTED = Color.rgb(91, 105, 115);
-    private static final int PAPER = Color.rgb(247, 249, 250);
-    private static final int TEAL = Color.rgb(0, 121, 112);
-    private static final int CORAL = Color.rgb(221, 91, 76);
-
     private int dp(float value) {
         return (int) (value * getResources().getDisplayMetrics().density + 0.5f);
     }
@@ -59,29 +53,29 @@ public final class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setStatusBarColor(PAPER);
+        getWindow().setStatusBarColor(Palette.PAPER);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         ScrollView scrollView = new ScrollView(this);
-        scrollView.setBackgroundColor(PAPER);
+        scrollView.setBackgroundColor(Palette.PAPER);
         scrollView.setFillViewport(true);
 
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(dp(24), dp(28), dp(24), dp(24));
 
-        TextView eyebrow = text("YOUR QUIET WORKSPACE", 12, TEAL);
+        TextView eyebrow = text("YOUR QUIET WORKSPACE", 12, Palette.ACCENT);
         eyebrow.setTypeface(Typeface.DEFAULT_BOLD);
         eyebrow.setLetterSpacing(0.12f);
         layout.addView(eyebrow, fullWidth(0, 12));
 
-        TextView title = text("Make room\nfor good work.", 38, INK);
+        TextView title = text("Make room\nfor good work.", 38, Palette.INK);
         title.setTypeface(Typeface.DEFAULT_BOLD);
         title.setLineSpacing(0, 0.92f);
         layout.addView(title, fullWidth(0, 12));
 
         TextView subtitle = text("Focus on what matters, then give your day somewhere to land.",
-                17, MUTED);
+                17, Palette.MUTED);
         subtitle.setLineSpacing(0, 1.15f);
         layout.addView(subtitle, fullWidth(0, 26));
 
@@ -90,35 +84,35 @@ public final class MainActivity extends Activity {
         featureStrip.setPadding(dp(18), dp(16), dp(18), dp(16));
         featureStrip.setBackground(roundedBackground(Color.rgb(226, 240, 237), 16));
 
-        TextView mark = text("●", 24, CORAL);
+        TextView mark = text("●", 24, Palette.ACCENT);
         mark.setGravity(Gravity.CENTER);
         featureStrip.addView(mark, new LinearLayout.LayoutParams(dp(34), dp(34)));
 
         LinearLayout featureCopy = new LinearLayout(this);
         featureCopy.setOrientation(LinearLayout.VERTICAL);
         featureCopy.setPadding(dp(12), 0, 0, 0);
-        TextView featureTitle = text("A simple rhythm", 16, INK);
+        TextView featureTitle = text("A simple rhythm", 16, Palette.INK);
         featureTitle.setTypeface(Typeface.DEFAULT_BOLD);
         featureCopy.addView(featureTitle);
-        featureCopy.addView(text("Small sessions. Clear days. Less friction.", 13, MUTED));
+        featureCopy.addView(text("Small sessions. Clear days. Less friction.", 13, Palette.MUTED));
         featureStrip.addView(featureCopy, new LinearLayout.LayoutParams(0,
                 LinearLayout.LayoutParams.WRAP_CONTENT, 1));
         layout.addView(featureStrip, fullWidth(0, 28));
 
-        TextView chooseTitle = text("Choose your next step", 14, MUTED);
+        TextView chooseTitle = text("Choose your next step", 14, Palette.MUTED);
         chooseTitle.setTypeface(Typeface.DEFAULT_BOLD);
         layout.addView(chooseTitle, fullWidth(0, 10));
 
-        Button timerButton = actionButton("Start a focus session   ›", TEAL);
+        Button timerButton = actionButton("Start a focus session   ›", Palette.ACCENT);
         timerButton.setOnClickListener(v -> startActivity(new Intent(this, TimerActivity.class)));
         layout.addView(timerButton, fullWidth(0, 10));
 
-        Button calendarButton = actionButton("Plan the day   ›", CORAL);
+        Button calendarButton = actionButton("Plan the day   ›", Palette.INK);
         calendarButton.setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, CalendarActivity.class)));
         layout.addView(calendarButton, fullWidth(0, 0));
 
-        TextView footer = text("ugm  /  focus, plan, repeat", 12, MUTED);
+        TextView footer = text("ugm  /  focus, plan, repeat", 12, Palette.MUTED);
         footer.setGravity(Gravity.CENTER);
         layout.addView(footer, fullWidth(34, 0));
 
