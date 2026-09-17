@@ -93,17 +93,17 @@ public final class CalendarActivity extends Activity {
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
         root.setPadding(
-                dp(20),
-                dp(24),
-                dp(20),
-                dp(20)
+                dp(16),
+                dp(16),
+                dp(16),
+                dp(16)
         );
         root.setBackgroundColor(Palette.PAPER);
 
         LinearLayout header = new LinearLayout(this);
         header.setOrientation(LinearLayout.HORIZONTAL);
         header.setGravity(Gravity.CENTER_VERTICAL);
-        header.setPadding(0, 0, 0, dp(12));
+        header.setPadding(0, 0, 0, dp(6));
 
         monthTitle = new TextView(this);
         monthTitle.setTextColor(Palette.INK);
@@ -182,7 +182,7 @@ public final class CalendarActivity extends Activity {
                 0,
                 0,
                 0,
-                dp(10)
+                dp(4)
         );
 
         Button monthButton = new Button(this);
@@ -670,7 +670,7 @@ public final class CalendarActivity extends Activity {
                 new GridLayout.LayoutParams();
 
         params.width = 0;
-        params.height = dp(44);
+        params.height = dp(34);
 
         params.columnSpec = GridLayout.spec(
                 index % DAYS_IN_WEEK,
@@ -683,10 +683,10 @@ public final class CalendarActivity extends Activity {
         );
 
         params.setMargins(
-                dp(2),
-                dp(2),
-                dp(2),
-                dp(2)
+                dp(1),
+                dp(1),
+                dp(1),
+                dp(1)
         );
 
         return params;
@@ -712,7 +712,7 @@ public final class CalendarActivity extends Activity {
             GradientDrawable background =
                     roundedBackground(
                             Palette.ACCENT,
-                            10f
+                            0f
                     );
 
             background.setStroke(
@@ -727,7 +727,7 @@ public final class CalendarActivity extends Activity {
             cell.setBackground(
                     roundedBackground(
                             Palette.ACCENT,
-                            10f
+                            0f
                     )
             );
 
@@ -737,7 +737,7 @@ public final class CalendarActivity extends Activity {
             cell.setBackground(
                     roundedBackground(
                             Palette.MUTED,
-                            10f
+                            0f
                     )
             );
 
@@ -749,7 +749,7 @@ public final class CalendarActivity extends Activity {
             cell.setBackground(
                     roundedBackground(
                             Palette.PAPER,
-                            10f
+                            0f
                     )
             );
 
