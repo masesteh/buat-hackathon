@@ -1,23 +1,16 @@
 package io.ugm;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.Typeface;
+import android.app.*;
+import android.content.*;
+import android.graphics.*;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.Gravity;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.GridLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.os.*;
+import android.text.*;
+import android.view.*;
+import android.widget.*;
 
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Locale;
+import java.text.*;
+import java.util.*;
 
 public final class CalendarActivity extends Activity {
 
