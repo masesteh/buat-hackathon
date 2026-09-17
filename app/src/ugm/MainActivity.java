@@ -112,6 +112,11 @@ public final class MainActivity extends Activity {
                 startActivity(new Intent(MainActivity.this, CalendarActivity.class)));
         layout.addView(calendarButton, fullWidth(0, 0));
 
+        Button cameraButton = actionButton("Open object camera   ›", Palette.MUTED);
+        cameraButton.setOnClickListener(v ->
+            startActivity(new Intent(MainActivity.this, CameraActivity.class)));
+        layout.addView(cameraButton, fullWidth(10, 0));
+
         TextView footer = text("ugm  /  focus, plan, repeat", 12, Palette.MUTED);
         footer.setGravity(Gravity.CENTER);
         layout.addView(footer, fullWidth(34, 0));
