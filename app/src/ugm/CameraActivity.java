@@ -28,6 +28,7 @@ public final class CameraActivity extends Activity {
     private TextureView preview;
     private DetectionOverlay overlay;
     private TextView status;
+    private Button cameraSwitchButton;
     private CameraDevice camera;
     private CameraCaptureSession captureSession;
     private HandlerThread cameraThread;
@@ -35,6 +36,7 @@ public final class CameraActivity extends Activity {
     private ExecutorService inferenceExecutor;
     private Interpreter interpreter;
     private boolean processing;
+    private boolean frontCamera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,10 @@ public final class CameraActivity extends Activity {
         Button back = button("Back to main", Palette.INK);
         back.setOnClickListener(v -> finish());
         root.addView(back, margins(0, 18, 0, 0));
+
+        cameraSwitchButton = button("Use front camera", Palette.ACCENT);
+        cameraSwitchButton.setOnClickListener(v -> switchCamera());
+        root.addView(cameraSwitchButton, margins(0, 8, 0, 0));
         BottomNavigation.add(this, root, 2);
         setContentView(root);
     }
@@ -115,10 +121,41 @@ public final class CameraActivity extends Activity {
     private void openCamera() {
         try {
             CameraManager manager = (CameraManager) getSystemService(CAMERA_SERVICE);
-            String cameraId = manager.getCameraIdList()[0];
+            String cameraId = findCamera(manager, frontCamera);
+            if (cameraId == null) {
+                status.setText("Requested camera unavailable");
+                return;
+            }
             manager.openCamera(cameraId, cameraStateCallback, cameraHandler);
         } catch (CameraAccessException | SecurityException exception) {
             status.setText("Camera unavailable");
+        }
+    }
+
+    private String findCamera(CameraManager manager, boolean front) throws CameraAccessException {
+        int requestedFacing = front
+                ? CameraCharacteristics.LENS_FACING_FRONT
+                : CameraCharacteristics.LENS_FACING_BACK;
+        String fallback = null;
+        for (String id : manager.getCameraIdList()) {
+            CameraCharacteristics characteristics = manager.getCameraCharacteristics(id);
+            Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);
+            if (facing != null) {
+                if (facing == requestedFacing) {
+                    return id;
+                }
+                fallback = id;
+            }
+        }
+        return fallback;
+    }
+
+    private void switchCamera() {
+        frontCamera = !frontCamera;
+        cameraSwitchButton.setText(frontCamera ? "Use back camera" : "Use front camera");
+        closeCamera(false);
+        if (preview.isAvailable()) {
+            openCamera();
         }
     }
 
@@ -300,6 +337,11 @@ public final class CameraActivity extends Activity {
 
     @Override
     protected void onPause() {
+        closeCamera(true);
+        super.onPause();
+    }
+
+    private void closeCamera(boolean stopThread) {
         if (captureSession != null) {
             captureSession.close();
             captureSession = null;
@@ -308,11 +350,10 @@ public final class CameraActivity extends Activity {
             camera.close();
             camera = null;
         }
-        if (cameraThread != null) {
+        if (stopThread && cameraThread != null) {
             cameraThread.quitSafely();
             cameraThread = null;
         }
-        super.onPause();
     }
 
     @Override
