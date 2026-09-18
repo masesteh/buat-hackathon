@@ -175,7 +175,7 @@ public final class ApiTestActivity extends Activity {
         HttpURLConnection connection = (HttpURLConnection) new URL(API_URL).openConnection();
         connection.setRequestMethod("POST");
         connection.setRequestProperty("X-API-Key", API_KEY);
-        connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+        connection.setRequestProperty("Content-Type", "application/json");
         connection.setDoOutput(true);
         connection.setConnectTimeout(10000);
         connection.setReadTimeout(10000);
