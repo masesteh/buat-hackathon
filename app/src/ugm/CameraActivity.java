@@ -77,13 +77,9 @@ public final class CameraActivity extends Activity {
         cameraFrame.addView(overlay, new FrameLayout.LayoutParams(dp(300), dp(300), Gravity.CENTER));
         root.addView(cameraFrame, new LinearLayout.LayoutParams(dp(300), dp(300)));
 
-        Button back = button("Back to main", Palette.INK);
-        back.setOnClickListener(v -> finish());
-        root.addView(back, margins(0, 18, 0, 0));
-
         cameraSwitchButton = button("Use front camera", Palette.ACCENT);
         cameraSwitchButton.setOnClickListener(v -> switchCamera());
-        root.addView(cameraSwitchButton, margins(0, 8, 0, 0));
+        root.addView(cameraSwitchButton, margins(0, 18, 0, 0));
         BottomNavigation.add(this, root, 2);
         setContentView(root);
     }
