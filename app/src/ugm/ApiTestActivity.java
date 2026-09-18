@@ -11,6 +11,7 @@ import org.json.*;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.*;
+import java.util.*;
 import java.util.concurrent.*;
 
 public final class ApiTestActivity extends Activity {
@@ -132,7 +133,7 @@ public final class ApiTestActivity extends Activity {
         executor.execute(() -> {
             String response;
             try {
-                response = postUserRequest(name, Integer.parseInt(age));
+                response = postUserRequest(nextUserId(), name, Integer.parseInt(age));
             } catch (Exception exception) {
                 response = "Request failed:\n" + exception.getMessage();
             }
@@ -144,7 +145,33 @@ public final class ApiTestActivity extends Activity {
         });
     }
 
-    private String postUserRequest(String name, int age) throws IOException {
+    private int nextUserId() throws IOException, JSONException {
+        HttpURLConnection connection = (HttpURLConnection) new URL(API_URL).openConnection();
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("X-API-Key", API_KEY);
+        connection.setConnectTimeout(10000);
+        connection.setReadTimeout(10000);
+        int status = connection.getResponseCode();
+        InputStream stream = status >= 400
+                ? connection.getErrorStream()
+                : connection.getInputStream();
+        String body = read(stream);
+        connection.disconnect();
+
+        JSONArray users = usersArray(body);
+        int maximumId = 0;
+        if (users != null) {
+            for (int index = 0; index < users.length(); index++) {
+                JSONObject user = users.optJSONObject(index);
+                if (user != null) {
+                    maximumId = Math.max(maximumId, user.optInt("id", 0));
+                }
+            }
+        }
+        return maximumId + 1;
+    }
+
+    private String postUserRequest(int id, String name, int age) throws IOException {
         HttpURLConnection connection = (HttpURLConnection) new URL(API_URL).openConnection();
         connection.setRequestMethod("POST");
         connection.setRequestProperty("X-API-Key", API_KEY);
@@ -153,7 +180,9 @@ public final class ApiTestActivity extends Activity {
         connection.setConnectTimeout(10000);
         connection.setReadTimeout(10000);
 
-        String json = "{\"name\":\"" + JSONObject.quote(name) + "\",\"age\":" + age + "}";
+        String json = "{\"id\":" + id
+            + ",\"name\":\"" + JSONObject.quote(name)
+            + "\",\"age\":" + age + "}";
         try (OutputStream output = connection.getOutputStream()) {
             output.write(json.getBytes(StandardCharsets.UTF_8));
         }
@@ -169,16 +198,7 @@ public final class ApiTestActivity extends Activity {
 
     private String formatUsers(String body) {
         try {
-            JSONArray users;
-            if (body.trim().startsWith("[")) {
-                users = new JSONArray(body);
-            } else {
-                JSONObject response = new JSONObject(body);
-                users = response.optJSONArray("users");
-                if (users == null) {
-                    users = response.optJSONArray("data");
-                }
-            }
+            JSONArray users = usersArray(body);
 
             if (users == null) {
                 return "No users array found in response.";
@@ -199,6 +219,15 @@ public final class ApiTestActivity extends Activity {
         } catch (JSONException exception) {
             return "Invalid JSON response:\n" + body;
         }
+    }
+
+    private JSONArray usersArray(String body) throws JSONException {
+        if (body.trim().startsWith("[")) {
+            return new JSONArray(body);
+        }
+        JSONObject response = new JSONObject(body);
+        JSONArray users = response.optJSONArray("users");
+        return users == null ? response.optJSONArray("data") : users;
     }
 
     private String read(InputStream stream) throws IOException {
