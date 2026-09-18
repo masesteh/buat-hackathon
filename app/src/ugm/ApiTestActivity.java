@@ -186,7 +186,8 @@ public final class ApiTestActivity extends Activity {
         return maximumId + 1;
     }
     
-    private String postUserRequest(int id, String name, int age) throws IOException {
+        private String postUserRequest(int id, String name, int age)
+            throws IOException, JSONException {
         HttpURLConnection connection =
                 (HttpURLConnection) new URL(API_URL).openConnection();
     
