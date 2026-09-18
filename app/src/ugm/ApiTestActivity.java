@@ -144,90 +144,140 @@ public final class ApiTestActivity extends Activity {
             });
         });
     }
-
     private int nextUserId() throws IOException, JSONException {
         HttpURLConnection connection = (HttpURLConnection) new URL(API_URL).openConnection();
+    
         connection.setRequestMethod("GET");
         connection.setRequestProperty("X-API-Key", API_KEY);
+        connection.setRequestProperty("Accept", "application/json");
         connection.setConnectTimeout(10000);
         connection.setReadTimeout(10000);
+    
         int status = connection.getResponseCode();
+    
         InputStream stream = status >= 400
                 ? connection.getErrorStream()
                 : connection.getInputStream();
+    
         String body = read(stream);
         connection.disconnect();
-
+    
+        if (status >= 400) {
+            throw new IOException("GET failed: HTTP " + status + "\n" + body);
+        }
+    
         JSONArray users = usersArray(body);
+    
         int maximumId = 0;
+    
         if (users != null) {
             for (int index = 0; index < users.length(); index++) {
                 JSONObject user = users.optJSONObject(index);
+    
                 if (user != null) {
-                    maximumId = Math.max(maximumId, user.optInt("id", 0));
+                    maximumId = Math.max(
+                            maximumId,
+                            user.optInt("id", 0)
+                    );
                 }
             }
         }
+    
         return maximumId + 1;
     }
-
+    
     private String postUserRequest(int id, String name, int age) throws IOException {
-        HttpURLConnection connection = (HttpURLConnection) new URL(API_URL).openConnection();
+        HttpURLConnection connection =
+                (HttpURLConnection) new URL(API_URL).openConnection();
+    
         connection.setRequestMethod("POST");
         connection.setRequestProperty("X-API-Key", API_KEY);
         connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("Accept", "application/json");
+    
         connection.setDoOutput(true);
         connection.setConnectTimeout(10000);
         connection.setReadTimeout(10000);
-
-        String json = "{\"id\":" + id
-            + ",\"name\":\"" + JSONObject.quote(name)
-            + "\",\"age\":" + age + "}";
+    
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", id);
+        jsonObject.put("name", name);
+        jsonObject.put("age", age);
+    
         try (OutputStream output = connection.getOutputStream()) {
-            output.write(json.getBytes(StandardCharsets.UTF_8));
+            output.write(
+                    jsonObject.toString().getBytes(StandardCharsets.UTF_8)
+            );
         }
-
+    
         int status = connection.getResponseCode();
+    
         InputStream stream = status >= 400
                 ? connection.getErrorStream()
                 : connection.getInputStream();
+    
         String body = read(stream);
+    
         connection.disconnect();
+    
         return "HTTP " + status + "\n\n" + body;
     }
-
+    
     private String formatUsers(String body) {
         try {
             JSONArray users = usersArray(body);
-
+    
             if (users == null) {
                 return "No users array found in response.";
             }
-
+    
             StringBuilder text = new StringBuilder();
+    
             for (int index = 0; index < users.length(); index++) {
                 JSONObject user = users.optJSONObject(index);
+    
                 if (user == null) {
                     continue;
                 }
-                text.append("id: ").append(user.opt("id"))
-                        .append("\nname: ").append(user.optString("name", ""))
-                        .append("\nage: ").append(user.opt("age"))
+    
+                text.append("id: ")
+                        .append(user.opt("id"))
+                        .append("\n");
+    
+                text.append("name: ")
+                        .append(user.optString("name", ""))
+                        .append("\n");
+    
+                text.append("age: ")
+                        .append(user.opt("age"))
                         .append("\n\n");
             }
-            return text.length() == 0 ? "No users found." : text.toString().trim();
+    
+            return text.length() == 0
+                    ? "No users found."
+                    : text.toString().trim();
+    
         } catch (JSONException exception) {
             return "Invalid JSON response:\n" + body;
         }
     }
-
+    
     private JSONArray usersArray(String body) throws JSONException {
-        if (body.trim().startsWith("[")) {
+        body = body.trim();
+    
+        if (body.startsWith("[")) {
             return new JSONArray(body);
         }
+    
         JSONObject response = new JSONObject(body);
+    
         JSONArray users = response.optJSONArray("users");
-        return users == null ? response.optJSONArray("data") : users;
+    
+        if (users != null) {
+            return users;
+        }
+    
+        return response.optJSONArray("data");
     }
 
     private String read(InputStream stream) throws IOException {
