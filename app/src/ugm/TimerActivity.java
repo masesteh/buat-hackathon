@@ -101,6 +101,13 @@ public class TimerActivity extends Activity {
         layout.addView(settingsButton, marginParams(0, 0, 0, 8));
         layout.addView(resetButton, marginParams(0, 0, 0, 8));
         layout.addView(backButton, matchParentWrapContent());
+
+        Button apiButton = new Button(this);
+        apiButton.setText("Test API");
+        styleButton(apiButton, Palette.MUTED);
+        apiButton.setOnClickListener(v ->
+            startActivity(new Intent(this, ApiTestActivity.class)));
+        layout.addView(apiButton, marginParams(0, 8, 0, 0));
         BottomNavigation.add(this, layout, 0);
         setContentView(layout);
         updateLabels();
