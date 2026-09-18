@@ -409,6 +409,7 @@ public final class CalendarActivity extends Activity {
         reminderRow.addView(clearReminderButton, new LinearLayout.LayoutParams(
                 dp(84), dp(46)));
         root.addView(reminderRow);
+        BottomNavigation.add(this, root, 1);
 
         ScrollView scrollView = new ScrollView(this);
         scrollView.setFillViewport(true);

@@ -10,7 +10,7 @@ import android.view.*;
 import android.widget.*;
 import java.util.*;
 
-public final class TimerActivity extends Activity {
+public class TimerActivity extends Activity {
     private static final String SETTINGS = "pomodoro_settings";
     private static final int DEFAULT_STUDY = 25;
     private static final int DEFAULT_BREAK = 5;
@@ -101,6 +101,7 @@ public final class TimerActivity extends Activity {
         layout.addView(settingsButton, marginParams(0, 0, 0, 8));
         layout.addView(resetButton, marginParams(0, 0, 0, 8));
         layout.addView(backButton, matchParentWrapContent());
+        BottomNavigation.add(this, layout, 0);
         setContentView(layout);
         updateLabels();
     }

@@ -78,6 +78,7 @@ public final class CameraActivity extends Activity {
         Button back = button("Back to main", Palette.INK);
         back.setOnClickListener(v -> finish());
         root.addView(back, margins(0, 18, 0, 0));
+        BottomNavigation.add(this, root, 2);
         setContentView(root);
     }
 
