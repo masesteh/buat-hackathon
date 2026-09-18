@@ -51,6 +51,21 @@ public final class ApiTestActivity extends Activity {
         testButton.setOnClickListener(v -> testApi());
         root.addView(testButton, margins(0, 0, 0, 12));
 
+        EditText nameInput = new EditText(this);
+        nameInput.setHint("Name");
+        nameInput.setSingleLine(true);
+        root.addView(nameInput, margins(0, 0, 0, 8));
+
+        EditText ageInput = new EditText(this);
+        ageInput.setHint("Age");
+        ageInput.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
+        ageInput.setSingleLine(true);
+        root.addView(ageInput, margins(0, 0, 0, 8));
+
+        Button submitButton = button("Submit user", Palette.INK);
+        submitButton.setOnClickListener(v -> postUser(nameInput, ageInput, submitButton));
+        root.addView(submitButton, margins(0, 0, 0, 12));
+
         result = new TextView(this);
         result.setText("Press the button to make the request.");
         result.setTextSize(14);
@@ -102,6 +117,54 @@ public final class ApiTestActivity extends Activity {
         String body = read(stream);
         connection.disconnect();
         return "HTTP " + status + "\n\n" + formatUsers(body);
+    }
+
+    private void postUser(EditText nameInput, EditText ageInput, Button submitButton) {
+        String name = nameInput.getText().toString().trim();
+        String age = ageInput.getText().toString().trim();
+        if (name.isEmpty() || age.isEmpty()) {
+            result.setText("Name and age are required.");
+            return;
+        }
+
+        submitButton.setEnabled(false);
+        result.setText("Submitting...");
+        executor.execute(() -> {
+            String response;
+            try {
+                response = postUserRequest(name, Integer.parseInt(age));
+            } catch (Exception exception) {
+                response = "Request failed:\n" + exception.getMessage();
+            }
+            String finalResponse = response;
+            runOnUiThread(() -> {
+                result.setText(finalResponse);
+                submitButton.setEnabled(true);
+            });
+        });
+    }
+
+    private String postUserRequest(String name, int age) throws IOException {
+        HttpURLConnection connection = (HttpURLConnection) new URL(API_URL).openConnection();
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("X-API-Key", API_KEY);
+        connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+        connection.setDoOutput(true);
+        connection.setConnectTimeout(10000);
+        connection.setReadTimeout(10000);
+
+        String json = "{\"name\":\"" + JSONObject.quote(name) + "\",\"age\":" + age + "}";
+        try (OutputStream output = connection.getOutputStream()) {
+            output.write(json.getBytes(StandardCharsets.UTF_8));
+        }
+
+        int status = connection.getResponseCode();
+        InputStream stream = status >= 400
+                ? connection.getErrorStream()
+                : connection.getInputStream();
+        String body = read(stream);
+        connection.disconnect();
+        return "HTTP " + status + "\n\n" + body;
     }
 
     private String formatUsers(String body) {
