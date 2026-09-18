@@ -146,47 +146,38 @@ public final class ApiTestActivity extends Activity {
     }
     private int nextUserId() throws IOException, JSONException {
         HttpURLConnection connection = (HttpURLConnection) new URL(API_URL).openConnection();
-    
+
         connection.setRequestMethod("GET");
         connection.setRequestProperty("X-API-Key", API_KEY);
         connection.setRequestProperty("Accept", "application/json");
         connection.setConnectTimeout(10000);
         connection.setReadTimeout(10000);
-    
+
         int status = connection.getResponseCode();
-    
         InputStream stream = status >= 400
                 ? connection.getErrorStream()
                 : connection.getInputStream();
-    
         String body = read(stream);
         connection.disconnect();
-    
+
         if (status >= 400) {
             throw new IOException("GET failed: HTTP " + status + "\n" + body);
         }
-    
+
         JSONArray users = usersArray(body);
-    
         int maximumId = 0;
-    
         if (users != null) {
             for (int index = 0; index < users.length(); index++) {
                 JSONObject user = users.optJSONObject(index);
-    
                 if (user != null) {
-                    maximumId = Math.max(
-                            maximumId,
-                            user.optInt("id", 0)
-                    );
+                    maximumId = Math.max(maximumId, user.optInt("id", 0));
                 }
             }
         }
-    
         return maximumId + 1;
     }
-    
-        private String postUserRequest(int id, String name, int age)
+
+    private String postUserRequest(int id, String name, int age)
             throws IOException, JSONException {
         HttpURLConnection connection =
                 (HttpURLConnection) new URL(API_URL).openConnection();
