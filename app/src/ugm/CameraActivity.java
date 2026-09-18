@@ -51,7 +51,7 @@ public final class CameraActivity extends Activity {
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
         root.setGravity(Gravity.CENTER_HORIZONTAL);
-        root.setPadding(dp(20), dp(24), dp(20), dp(20));
+        root.setPadding(dp(20), dp(24), dp(20), dp(84));
         root.setBackgroundColor(Palette.PAPER);
 
         TextView title = new TextView(this);
@@ -80,8 +80,7 @@ public final class CameraActivity extends Activity {
         cameraSwitchButton = button("Use front camera", Palette.ACCENT);
         cameraSwitchButton.setOnClickListener(v -> switchCamera());
         root.addView(cameraSwitchButton, margins(0, 18, 0, 0));
-        BottomNavigation.add(this, root, 2);
-        setContentView(root);
+        setContentView(BottomNavigation.attach(this, root, 2));
     }
 
     private void loadModel() {

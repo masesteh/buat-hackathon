@@ -98,7 +98,7 @@ public final class CalendarActivity extends Activity {
                 dp(16),
                 dp(16),
                 dp(16),
-                dp(16)
+                dp(80)
         );
         root.setBackgroundColor(Palette.PAPER);
 
@@ -409,13 +409,11 @@ public final class CalendarActivity extends Activity {
         reminderRow.addView(clearReminderButton, new LinearLayout.LayoutParams(
                 dp(84), dp(46)));
         root.addView(reminderRow);
-        BottomNavigation.add(this, root, 1);
-
         ScrollView scrollView = new ScrollView(this);
         scrollView.setFillViewport(true);
         scrollView.setBackgroundColor(Palette.PAPER);
         scrollView.addView(root);
-        setContentView(scrollView);
+        setContentView(BottomNavigation.attach(this, scrollView, 1));
     }
 
     private void renderCalendar() {

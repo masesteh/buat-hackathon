@@ -10,11 +10,18 @@ public final class BottomNavigation {
     private BottomNavigation() {
     }
 
-    public static void add(Activity activity, LinearLayout parent, int selected) {
+    public static FrameLayout attach(Activity activity, View content, int selected) {
+        FrameLayout container = new FrameLayout(activity);
+        container.setBackgroundColor(Palette.PAPER);
+        container.addView(content, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT));
+
         LinearLayout tabs = new LinearLayout(activity);
         tabs.setGravity(Gravity.CENTER);
-        tabs.setPadding(0, activity.getResources().getDisplayMetrics().densityDpi / 8, 0, 0);
+        tabs.setPadding(0, dp(activity, 4), 0, 0);
         tabs.setBackgroundColor(Palette.PAPER);
+        tabs.setElevation(dp(activity, 8));
 
         addTab(activity, tabs, "Timer", selected == 0,
                 () -> open(activity, MainActivity.class, selected == 0));
@@ -23,9 +30,12 @@ public final class BottomNavigation {
         addTab(activity, tabs, "Camera", selected == 2,
                 () -> open(activity, CameraActivity.class, selected == 2));
 
-        parent.addView(tabs, new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
+        FrameLayout.LayoutParams tabsParams = new FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            dp(activity, 64),
+            Gravity.BOTTOM);
+        container.addView(tabs, tabsParams);
+        return container;
     }
 
     private static void addTab(Activity activity, LinearLayout parent, String label,

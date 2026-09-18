@@ -32,7 +32,7 @@ public final class ApiTestActivity extends Activity {
     private void buildView() {
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
-        root.setPadding(dp(20), dp(24), dp(20), dp(20));
+        root.setPadding(dp(20), dp(24), dp(20), dp(84));
         root.setBackgroundColor(Palette.PAPER);
 
         TextView title = new TextView(this);
@@ -84,7 +84,7 @@ public final class ApiTestActivity extends Activity {
         Button back = button("Back", Palette.INK);
         back.setOnClickListener(v -> finish());
         root.addView(back, margins(0, 14, 0, 0));
-        setContentView(root);
+        setContentView(BottomNavigation.attach(this, root, 0));
     }
 
     private void testApi() {

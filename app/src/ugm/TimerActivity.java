@@ -40,7 +40,7 @@ public class TimerActivity extends Activity {
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setGravity(Gravity.CENTER_HORIZONTAL);
-        layout.setPadding(dp(24), dp(28), dp(24), dp(24));
+        layout.setPadding(dp(24), dp(28), dp(24), dp(88));
         layout.setBackgroundColor(Palette.PAPER);
 
         TextView eyebrow = new TextView(this);
@@ -108,8 +108,7 @@ public class TimerActivity extends Activity {
         apiButton.setOnClickListener(v ->
             startActivity(new Intent(this, ApiTestActivity.class)));
         layout.addView(apiButton, marginParams(0, 8, 0, 0));
-        BottomNavigation.add(this, layout, 0);
-        setContentView(layout);
+        setContentView(BottomNavigation.attach(this, layout, 0));
         updateLabels();
     }
 
